@@ -3,6 +3,8 @@
 A Latex boilerplate, to ease the pain of writing docs and reports. (Sometimes
 a programmer's gotta do what a programmer's gotta do what a programmer's gotta do).
 
+Tested under Ubuntu 10.04
+
 
 = HowTo =
 
