@@ -21,3 +21,9 @@ DCLASS=article
 FRULE=.3pt
 HRULE=.0ptde
 # Width of footer/header rules
+
+OTHER_OPTIONS=
+# other options you want to include in the preamble. Must be formated to fit in
+# a sed command (escape slashes, dollars, etc.)
+# For instance:
+# OTHER_OPTIONS=\\usepackage{multicol}\n\\usepackage{cancel}

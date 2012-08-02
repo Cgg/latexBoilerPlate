@@ -54,6 +54,8 @@ $(HEADER_CUSTOM): $(HEADER_PATTERN) DocInfos.mk | $(TMPPATH)/
 # replace occurences of $FRULE, $HRULE
 	sed -i 's/\$$FRULE/$(FRULE)/' $@.tmp
 	sed -i 's/\$$HRULE/$(HRULE)/' $@.tmp
+# insert the OTHER_OPTIONS
+	sed -i 's/\$$OTHER_OPTIONS/$(OTHER_OPTIONS)/' $@.tmp
 
 	b=\usepackage[$(LANG)]{babel}
 ifeq ($(LANG), french)
