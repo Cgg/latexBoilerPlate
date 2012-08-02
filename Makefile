@@ -1,7 +1,7 @@
 include DocInfos.mk
 
 TEXPATH=./tex
-PIXPATH=./pics
+PIXPATH=.\/pics # used in sed script, hence the back-slash
 TMPPATH=./tmp
 
 HEADER_PATTERN=header.tex
