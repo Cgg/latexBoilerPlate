@@ -42,7 +42,7 @@ $FONT
 }
 
 % Listings
-\usepackage{minted}
+% \usepackage{minted} not working by default on Ubuntu 10.04
 
 % Spacing:
 \usepackage{setspace}
@@ -67,14 +67,9 @@ $FONT
 % Object:
 \newcommand\OBJECT{$OBJECT}
 
-% End of line(forced):
-\newcommand\el{\hfill\\\}
-
 % Begining of the document
 \begin{document}
-
+%
 % Lists design:
 \renewcommand\labelitemii{$\diamond$}
 \renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
-
-
