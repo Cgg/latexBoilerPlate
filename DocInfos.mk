@@ -1,4 +1,4 @@
-FILE=
+FILE=file
 
 # Insert infos here:
 TITLE=
