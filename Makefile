@@ -13,6 +13,7 @@ LATEX=latex -shell-escape
 PDF=pdflatex -shell-escape
 DVIPDF=dvipdf
 
+CP=cp -v
 RM=-rm -rfv
 MV=mv -v
 MKDIR=mkdir -p
@@ -33,30 +34,43 @@ $(FILE).pdf: $(TMPPATH)/$(FILE).tex | $(TMPPATH)/
 # concatenate every tex files in the list to the big tex file
 $(TMPPATH)/$(FILE).tex: $(TEXFILES)
 	$(foreach tex, $<, cat $(tex) >> $(@).tmp;)
+	$(ECHO) "\\\end{document}" >> $(@).tmp
+
 	$(MV) $(@).tmp $(@)
 
 # parse the header pattern and replace in it placeholders with defined variables
 # in DocInfo.mk
 $(HEADER_CUSTOM): $(HEADER_PATTERN) DocInfos.mk
+	$(CP) $< $<.tmp
+# replace occurences of $TITLE, $AUTHOR, $OBJECT
+	sed -i 's/\$$AUTHOR/$(AUTHOR)/' $<.tmp
+	sed -i 's/\$$TITLE/$(TITLE)/' $<.tmp
+	sed -i 's/\$$OBJECT/$(OBJECT)/' $<.tmp
+# replace occurences of $PIXPATH
+	sed -i 's/\$$PIXPATH/$(PIXPATH)/' $<.tmp
+# replace occurences of $FRULE, $HRULE
+	sed -i 's/\$$FRULE/$(FRULE)/' $<.tmp
+	sed -i 's/\$$HRULE/$(HRULE)/' $<.tmp
+
+	b=\usepackage[$(LANG)]{babel}
+ifneq($(LANG), french)
+	b+=\n usepackage[T1]{fontenc}
+endif
+	sed -i 's/\$$LANG/$(b)/' $<.tmp
+
+	a=
+ifneq($(FONT), default)
+	$a=\usepackage{$(FONT)}
+endif
+	sed -i 's/\$$FONT/$(a)/' $<.tmp
+
+	$(MV) $<.tmp $@
 
 $(TMPDIR)/:
 	$(MKDIR) $@
 
 re: clean all
 
-#dvi: tex
-	#${ECHO} "	*** Generating dvi file... ***"
-	#${LATEX} *.tex
-	#if test -e *.toc;\
-	#then ${LATEX} *.tex;\
-	#fi
-	#${ECHO} "	*** dvi file generated. ***"
-
-#dvipdf: dvi
-	#${ECHO} "	*** Generating pdf file... ***"
-	#${DVIPDF} *.dvi
-	#${ECHO} "	*** pdf file generated. ***"
-	
 cleanall: clean
 	$(ECHO) "*** Cleaning everything ***"
 	$(RM) $(FILE).pdf
