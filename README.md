@@ -3,6 +3,7 @@
 A Latex boilerplate, to ease the pain of writing docs and reports. (Sometimes
 a programmer's gotta do what a programmer's gotta do what a programmer's gotta do).
 
+
 = HowTo =
 
  - Fill in the infos about your document in DocInfos.mk
@@ -13,6 +14,13 @@ in sections named 1.section\_one.tex and so on).
  using the `\PIXPATH` command.
  - `make` to build your report. `make clean` to clean the mess while keeping the
  generated pdf around, `make cleanall` to wipe out everything.
+
+
+= Things to know =
+
+ - This boilerplate is intended to work with utf-8 encoded files only. That's
+ something that could be improved in the future.
+
 
 = Shoot out =
 
