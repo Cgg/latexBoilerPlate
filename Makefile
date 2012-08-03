@@ -11,7 +11,10 @@ ifneq ($(FONT), default)
 endif
 
 TEXPATH=./tex
-PIXPATH=.\/pics # used in sed script, hence the back-slash
+# used in sed script, hence the back-slash
+# also, note that since pdflatex is runned from ./tmp, the relative path to pics
+# is ../pics and not ./pics
+PIXPATH=..\/pics
 TMPPATH=./tmp
 
 HEADER_PATTERN=header.tex
