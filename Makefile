@@ -49,8 +49,9 @@ $(HEADER_CUSTOM): $(HEADER_PATTERN) DocInfos.mk | $(TMPPATH)/
 	sed -i 's/\$$OBJECT/$(OBJECT)/' $@.tmp
 # replace occurences of $PIXPATH
 	sed -i 's/\$$PIXPATH/$(PIXPATH)/' $@.tmp
-# replace occurences of DCLASS
+# replace occurences of DCLASS and DOPTIONS
 	sed -i 's/\$$DCLASS/$(DCLASS)/' $@.tmp
+	sed -i 's/\$$DOPTIONS/$(DOPTIONS)/' $@.tmp
 # replace occurences of $FRULE, $HRULE
 	sed -i 's/\$$FRULE/$(FRULE)/' $@.tmp
 	sed -i 's/\$$HRULE/$(HRULE)/' $@.tmp

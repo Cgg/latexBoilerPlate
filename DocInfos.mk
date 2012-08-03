@@ -17,6 +17,8 @@ FONT=default
 
 DCLASS=article
 # Document class (article, letter, report)
+DOPTIONS=twoside
+# Document options : twoside, font size, page size, etc.
 
 FRULE=.3pt
 HRULE=.0ptde
