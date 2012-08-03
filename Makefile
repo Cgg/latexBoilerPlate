@@ -1,7 +1,7 @@
 include DocInfos.mk
 
 SLANG=\\usepackage[$(LANG)]{babel}
-ifeq ($(LANG), french)
+ifneq (, $(findstring french, $(LANG)))
 	SLANG+=\n\\usepackage[T1]{fontenc}
 endif
 
