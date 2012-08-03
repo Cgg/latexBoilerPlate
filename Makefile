@@ -1,5 +1,15 @@
 include DocInfos.mk
 
+SLANG=\\usepackage[$(LANG)]{babel}
+ifeq ($(LANG), french)
+	SLANG+=\n\\usepackage[T1]{fontenc}
+endif
+
+SFONT=
+ifneq ($(FONT), default)
+	SFONT=\usepackage{$(FONT)}
+endif
+
 TEXPATH=./tex
 PIXPATH=.\/pics # used in sed script, hence the back-slash
 TMPPATH=./tmp
@@ -49,26 +59,16 @@ $(HEADER_CUSTOM): $(HEADER_PATTERN) DocInfos.mk | $(TMPPATH)/
 	sed -i 's/\$$OBJECT/$(OBJECT)/' $@.tmp
 # replace occurences of $PIXPATH
 	sed -i 's/\$$PIXPATH/$(PIXPATH)/' $@.tmp
-# replace occurences of DCLASS and DOPTIONS
+# replace occurences of DCLASS
 	sed -i 's/\$$DCLASS/$(DCLASS)/' $@.tmp
-	sed -i 's/\$$DOPTIONS/$(DOPTIONS)/' $@.tmp
 # replace occurences of $FRULE, $HRULE
 	sed -i 's/\$$FRULE/$(FRULE)/' $@.tmp
 	sed -i 's/\$$HRULE/$(HRULE)/' $@.tmp
 # insert the OTHER_OPTIONS
 	sed -i 's/\$$OTHER_OPTIONS/$(OTHER_OPTIONS)/' $@.tmp
-
-	b=\usepackage[$(LANG)]{babel}
-ifeq ($(LANG), french)
-	b+=\nusepackage[T1]{fontenc}
-endif
-	sed -i 's/\$$LANG/$(b)/' $@.tmp
-
-	a=
-ifneq ($(FONT), default)
-	$a=\usepackage{$(FONT)}
-endif
-	sed -i 's/\$$FONT/$(a)/' $@.tmp
+# insert the FONT and LANG parameters
+	sed -i 's/\$$LANG/$(SLANG)/' $@.tmp
+	sed -i 's/\$$FONT/$(SFONT)/' $@.tmp
 
 	$(MV) $@.tmp $@
 
