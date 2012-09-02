@@ -1,7 +1,20 @@
 include DocInfos.mk
 
+SLANG=\\usepackage[$(LANG)]{babel}
+ifneq (, $(findstring french, $(LANG)))
+	SLANG+=\n\\usepackage[T1]{fontenc}
+endif
+
+SFONT=
+ifneq ($(FONT), default)
+	SFONT=\usepackage{$(FONT)}
+endif
+
 TEXPATH=./tex
-PIXPATH=./pics
+# used in sed script, hence the back-slash
+# also, note that since pdflatex is runned from ./tmp, the relative path to pics
+# is ../pics and not ./pics
+PIXPATH=..\/pics
 TMPPATH=./tmp
 
 HEADER_PATTERN=header.tex
@@ -13,57 +26,69 @@ LATEX=latex -shell-escape
 PDF=pdflatex -shell-escape
 DVIPDF=dvipdf
 
-RM=-rm -rfv
-MV=mv -v
+CP=@cp -v
+RM=-@rm -rfv
+MV=@mv -v
 MKDIR=mkdir -p
 ECHO=@echo
 
 all: $(FILE).pdf
 
 # generate a pdf file from the big tex file and then moves it at the root
-$(FILE).pdf: $(TMPPATH)/$(FILE).tex | $(TMPPATH)/
+$(FILE).pdf: $(TMPPATH)/$(FILE).tex
 	$(ECHO) "*** Generating pdf file... ***"
-	$(PDF) $<
-	if test -e $(TMPPATH)/*.toc;\
-		then $(PDF) $<;\
-	fi
+	cd $(TMPPATH); $(PDF) $(<F); \
+	if test -e $(FILE).toc;\
+		then $(PDF) $(<F);\
+	fi; cd -
 	$(MV) $(TMPPATH)/$(FILE).pdf $(FILE).pdf
 	$(ECHO) "*** pdf file generated. ***"
 
 # concatenate every tex files in the list to the big tex file
-$(TMPPATH)/$(FILE).tex: $(TEXFILES)
-	$(foreach tex, $<, cat $(tex) >> $(@).tmp;)
+$(TMPPATH)/$(FILE).tex: $(TEXFILES) | $(TMPPATH)/
+	$(ECHO) Texfiles : $(TEXFILES)
+	$(foreach tex, $(TEXFILES), cat $(tex) >> $(@).tmp;)
+	$(ECHO) "\\end{document}" >> $(@).tmp
+
 	$(MV) $(@).tmp $(@)
 
 # parse the header pattern and replace in it placeholders with defined variables
 # in DocInfo.mk
-$(HEADER_CUSTOM): $(HEADER_PATTERN) DocInfos.mk
+$(HEADER_CUSTOM): $(HEADER_PATTERN) DocInfos.mk | $(TMPPATH)/
+	$(CP) $< $@.tmp
+# replace occurences of $TITLE, $AUTHOR, $OBJECT
+	sed -i 's/\$$AUTHOR/$(AUTHOR)/' $@.tmp
+	sed -i 's/\$$TITLE/$(TITLE)/' $@.tmp
+	sed -i 's/\$$OBJECT/$(OBJECT)/' $@.tmp
+# replace occurences of $PIXPATH
+	sed -i 's/\$$PIXPATH/$(PIXPATH)/' $@.tmp
+# replace occurences of DCLASS
+	sed -i 's/\$$DCLASS/$(DCLASS)/' $@.tmp
+# replace occurences of $FRULE, $HRULE
+	sed -i 's/\$$FRULE/$(FRULE)/' $@.tmp
+	sed -i 's/\$$HRULE/$(HRULE)/' $@.tmp
+# insert the OTHER_OPTIONS
+	sed -i 's/\$$OTHER_OPTIONS/$(OTHER_OPTIONS)/' $@.tmp
 
-$(TMPDIR)/:
+	$(ECHO) $(SLANG)
+	sed -i 's/\$$LANG/$(SLANG)/' $@.tmp
+
+	sed -i 's/\$$FONT/$(SFONT)/' $@.tmp
+
+	$(MV) $@.tmp $@
+
+$(TMPPATH)/:
 	$(MKDIR) $@
 
 re: clean all
 
-#dvi: tex
-	#${ECHO} "	*** Generating dvi file... ***"
-	#${LATEX} *.tex
-	#if test -e *.toc;\
-	#then ${LATEX} *.tex;\
-	#fi
-	#${ECHO} "	*** dvi file generated. ***"
-
-#dvipdf: dvi
-	#${ECHO} "	*** Generating pdf file... ***"
-	#${DVIPDF} *.dvi
-	#${ECHO} "	*** pdf file generated. ***"
-	
 cleanall: clean
 	$(ECHO) "*** Cleaning everything ***"
 	$(RM) $(FILE).pdf
-	$(ECHO) "	*** Done. ***"
+	$(ECHO) "*** Done. ***"
 
 clean:
 	$(ECHO) "*** Cleaning all but final pdf file ***"
 	$(RM) $(TMPPATH)
-	$(ECHO) "	*** Done. ***"
+	$(ECHO) "*** Done. ***"
 
