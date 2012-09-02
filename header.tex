@@ -1,0 +1,82 @@
+\documentclass[$DOPTIONS]{$DCLASS}
+\usepackage{eurosym}
+\usepackage{slashbox}
+
+% To include pictures
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{placeins}
+
+% Unicode encoding
+\usepackage[utf8x]{inputenc}
+
+\usepackage{xcolor}
+
+\usepackage{eurosym}
+
+\usepackage{verbatim}
+
+% Language settings:
+$LANG
+
+% Tables
+\usepackage{array}
+\usepackage{longtable}
+
+% include font iff $FONT != default
+$FONT
+
+\title{$TITLE}
+\author{$AUTHOR}
+
+% Page layout settings
+\usepackage{geometry}
+\geometry{
+	a4paper,  % 21 x 29,7 cm
+	body={160mm,240mm},
+	left=30mm,
+	top=25mm,
+	headheight=7mm,
+	headsep=4mm,
+	marginparsep=4mm,
+	marginparwidth=27mm
+}
+
+% Listings
+% \usepackage{minted} not working by default on Ubuntu 10.04
+
+% Spacing:
+\usepackage{setspace}
+
+% Headers and footers
+% bas-droite/basgauche: page
+% milieu: auteur+titre
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+          \fancyhf{}
+          \fancyfoot[LE,RO]{\textcolor[gray]{0.3}{\thepage}}
+          % Rulers width
+          \renewcommand{\footrulewidth}{$FRULE}
+          \renewcommand{\headrulewidth}{$HRULE}
+\fancyfoot[LO,RE]{\textcolor[gray]{0.3}{$AUTHOR}}
+\fancyfoot[CO,CE]{\textcolor[gray]{0.3}{$TITLE}}
+
+% Vars & functs
+% Paths
+\newcommand\PIXPATH{$PIXPATH}
+
+% Object:
+\newcommand\OBJECT{$OBJECT}
+
+% other options
+$OTHER_OPTIONS
+
+% Hyperrefferences
+\usepackage{hyperref}
+
+% Begining of the document
+\begin{document}
+%
+% Lists design:
+\renewcommand\labelitemii{$\diamond$}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
