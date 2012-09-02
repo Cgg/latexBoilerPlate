@@ -8,6 +8,7 @@ AUTHOR=
 LANG=
 # For hyphenation and other language dependant stuff
 # Could be "french" or "english"
+# Or a combination like french,english.
 
 FONT="default"
 # Fonts (among others): kpfonts, utopia, charter, yfonts, venturis2
