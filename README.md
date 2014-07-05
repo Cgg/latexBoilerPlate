@@ -1,12 +1,13 @@
-= What's that =
+What's that
+-----------
 
-A Latex boilerplate, to ease the pain of writing docs and reports. (Sometimes
-a programmer's gotta do what a programmer's gotta do what a programmer's gotta do).
+A Latex boilerplate, helping with the task of writing reports in LaTeX.
 
-Tested under Ubuntu 10.04
+Tested under Ubuntu 10.04, 12.04. (It should work if you install texlive).
 
 
-= HowTo =
+HowTo
+-----
 
  - Fill in the infos about your document in DocInfos.mk
  - Place your tex files in the "tex" folder, and name them in the order you want
@@ -18,13 +19,15 @@ in sections named 1.section\_one.tex and so on).
  generated pdf around, `make cleanall` to wipe out everything.
 
 
-= Things to know =
+Things to know
+--------------
 
  - This boilerplate is intended to work with utf-8 encoded files only. That's
  something that could be improved in the future.
 
 
-= Shoot out =
+Remerciements
+-------------
 
 This boilerplate is inspired by the latex tree from Raphael Lizé
 (https://github.com/time0ut)
