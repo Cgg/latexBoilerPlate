@@ -1,13 +1,14 @@
+# name of the generated file
 FILE=file
 
 # Insert infos here:
-TITLE=
-OBJECT=
-AUTHOR=
+TITLE=Your title
+OBJECT=Your object
+AUTHOR=Your author
 
-LANG=
+LANG=english
 # For hyphenation and other language dependant stuff
-# Could be "french" or "english"
+# Could be french or english
 # You can also combine multiple langages, like english,french. The last one is
 # used by default but you can switch to the others at any time.
 
